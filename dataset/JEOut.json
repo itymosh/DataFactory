@@ -1,0 +1,121 @@
+{
+	"name": "JEOut",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Gebucht",
+				"type": "date"
+			},
+			{
+				"name": "BID",
+				"type": "varchar"
+			},
+			{
+				"name": "Buchungskreis",
+				"type": "varchar"
+			},
+			{
+				"name": "Journalnummer",
+				"type": "varchar"
+			},
+			{
+				"name": "Konto",
+				"type": "varchar"
+			},
+			{
+				"name": "Gegenkonto",
+				"type": "varchar"
+			},
+			{
+				"name": "Periode",
+				"type": "varchar"
+			},
+			{
+				"name": "Buchungstext",
+				"type": "varchar"
+			},
+			{
+				"name": "Belegdatum",
+				"type": "varchar"
+			},
+			{
+				"name": "Belegnummer",
+				"type": "varchar"
+			},
+			{
+				"name": "Steuercode",
+				"type": "varchar"
+			},
+			{
+				"name": "Wkz_Eigenwrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Steuerbetrag_Eigenwrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Saldovortrag_Eigenwrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Umsatz_Soll_Eigenwrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Umsatz_Haben_Eigenwrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Wkz_Buchungswrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Steuerbetrag_Buchungswrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Saldovortrag_Buchungswrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Umsatz_Soll_Buchungswrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "Umsatz_Haben_Buchungswrung",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "JE"
+		}
+	}
+}

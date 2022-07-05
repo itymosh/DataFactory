@@ -1,0 +1,334 @@
+{
+	"name": "Blob to SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "JE CSV TO SQL",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Gebucht",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gebucht",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "BID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Buchungskreis",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Buchungskreis",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Journalnummer",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Journalnummer",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Konto",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Konto",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Gegenkonto",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gegenkonto",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Periode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Periode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Buchungstext",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Buchungstext",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Belegdatum",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Belegdatum",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Belegnummer",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Belegnummer",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Steuercode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Steuercode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Wkz (Eigenw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Wkz_Eigenwrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Steuerbetrag (Eigenw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Steuerbetrag_Eigenwrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Saldovortrag (Eigenw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Saldovortrag_Eigenwrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Umsatz Soll (Eigenw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Umsatz_Soll_Eigenwrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Umsatz Haben (Eigenw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Umsatz_Haben_Eigenwrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Wkz (Buchungsw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Wkz_Buchungswrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Steuerbetrag (Buchungsw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Steuerbetrag_Buchungswrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Saldovortrag (Buchungsw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Saldovortrag_Buchungswrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Umsatz Soll (Buchungsw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Umsatz_Soll_Buchungswrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Umsatz Haben (Buchungsw�hrung)",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Umsatz_Haben_Buchungswrung",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 3,
+									"precision": 18
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "JE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "JEOut",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
