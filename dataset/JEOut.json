@@ -115,7 +115,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "JE"
+			"table": "JE2"
 		}
 	}
 }
