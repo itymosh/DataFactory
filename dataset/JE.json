@@ -1,0 +1,28 @@
+{
+	"name": "JE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "rptFibuBuchungsjournal 2022-01_rptFibuBuchungsjournal.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Gebucht;BID;Buchungskreis;Journalnummer;Konto;Gegenkonto;Periode;Buchungstext;Belegdatum;Belegnummer;Steuercode;Wkz (Eigenw�hrung);Steuerbetrag (Eigenw�hrung);Saldovortrag (Eigenw�hrung);Umsatz Soll (Eigenw�hrung);Umsatz Haben (Eigenw�hrung);Wkz (Buchungsw�hrung);Steuerbetrag (Buchungsw�hrung);Saldovortrag (Buchungsw�hrung);Umsatz Soll (Buchungsw�hrung);Umsatz Haben (Buchungsw�hrung)",
+				"type": "String"
+			}
+		]
+	}
+}
