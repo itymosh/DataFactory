@@ -1,0 +1,555 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DataFactrory1"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/JE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "rptFibuBuchungsjournal 2022-01_rptFibuBuchungsjournal.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Gebucht;BID;Buchungskreis;Journalnummer;Konto;Gegenkonto;Periode;Buchungstext;Belegdatum;Belegnummer;Steuercode;Wkz (Eigenw�hrung);Steuerbetrag (Eigenw�hrung);Saldovortrag (Eigenw�hrung);Umsatz Soll (Eigenw�hrung);Umsatz Haben (Eigenw�hrung);Wkz (Buchungsw�hrung);Steuerbetrag (Buchungsw�hrung);Saldovortrag (Buchungsw�hrung);Umsatz Soll (Buchungsw�hrung);Umsatz Haben (Buchungsw�hrung)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/JEOut')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Gebucht",
+						"type": "date"
+					},
+					{
+						"name": "BID",
+						"type": "varchar"
+					},
+					{
+						"name": "Buchungskreis",
+						"type": "varchar"
+					},
+					{
+						"name": "Journalnummer",
+						"type": "varchar"
+					},
+					{
+						"name": "Konto",
+						"type": "varchar"
+					},
+					{
+						"name": "Gegenkonto",
+						"type": "varchar"
+					},
+					{
+						"name": "Periode",
+						"type": "varchar"
+					},
+					{
+						"name": "Buchungstext",
+						"type": "varchar"
+					},
+					{
+						"name": "Belegdatum",
+						"type": "varchar"
+					},
+					{
+						"name": "Belegnummer",
+						"type": "varchar"
+					},
+					{
+						"name": "Steuercode",
+						"type": "varchar"
+					},
+					{
+						"name": "Wkz_Eigenwrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Steuerbetrag_Eigenwrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Saldovortrag_Eigenwrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Umsatz_Soll_Eigenwrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Umsatz_Haben_Eigenwrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Wkz_Buchungswrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Steuerbetrag_Buchungswrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Saldovortrag_Buchungswrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Umsatz_Soll_Buchungswrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Umsatz_Haben_Buchungswrung",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "JE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob to SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "JE CSV TO SQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gebucht",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Gebucht",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "BID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "BID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Buchungskreis",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Buchungskreis",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Journalnummer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Journalnummer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Konto",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Konto",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Gegenkonto",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Gegenkonto",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Periode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Periode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Buchungstext",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Buchungstext",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Belegdatum",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Belegdatum",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Belegnummer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Belegnummer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Steuercode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Steuercode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Wkz (Eigenw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Wkz_Eigenwrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Steuerbetrag (Eigenw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Steuerbetrag_Eigenwrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Saldovortrag (Eigenw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Saldovortrag_Eigenwrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Umsatz Soll (Eigenw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Umsatz_Soll_Eigenwrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Umsatz Haben (Eigenw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Umsatz_Haben_Eigenwrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Wkz (Buchungsw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Wkz_Buchungswrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Steuerbetrag (Buchungsw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Steuerbetrag_Buchungswrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Saldovortrag (Buchungsw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Saldovortrag_Buchungswrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Umsatz Soll (Buchungsw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Umsatz_Soll_Buchungswrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Umsatz Haben (Buchungsw�hrung)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Umsatz_Haben_Buchungswrung",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 3,
+											"precision": 18
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "JE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "JEOut",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/JE')]",
+				"[concat(variables('factoryId'), '/datasets/JEOut')]"
+			]
+		}
+	]
+}
